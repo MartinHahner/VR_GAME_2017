@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// author: David Guralnick
+
+System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
