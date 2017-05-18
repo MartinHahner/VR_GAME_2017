@@ -6,7 +6,7 @@ public class LoadNewScene : MonoBehaviour {
 
   public void LoadByIndex(int sceneIndex){
 
-  	SceneManager.LoadScene (sceneIndex);
+  	SceneManager.LoadScene(sceneIndex);
 
   }
 
