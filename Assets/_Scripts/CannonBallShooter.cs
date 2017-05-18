@@ -1,5 +1,3 @@
-﻿// author: David Guralnick
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +12,7 @@ public class CannonBallShooter : MonoBehaviour {
 	}
 
 	void DestroyProjectile(){
-		Destroy (gameObject);	
+		Destroy (gameObject);
 	}
-			
+
 }
