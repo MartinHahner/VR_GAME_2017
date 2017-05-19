@@ -7,6 +7,18 @@ public class Countdown : MonoBehaviour {
 
 	float timeLeft = 120.0f;
 
+	public CanvasGroup canvasGroup;
+
+	void Start() {
+
+		// hide GameOver Screen
+		canvasGroup.alpha = 0;
+		canvasGroup.interactable = false;
+		canvasGroup.blocksRaycasts = false;
+
+	}
+
+
 	void Update() {
 
 		TextMesh textObject = GameObject.Find("CountdownText").GetComponent<TextMesh>();
@@ -40,11 +52,14 @@ public class Countdown : MonoBehaviour {
 			textObject.color = new Color(r,g,b,a);
 			textObject.text = "Game Over!";
 
-
-			// SceneManager.LoadScene(1);
+			// show GameOver Screen
+			canvasGroup.alpha = 1;
+			canvasGroup.interactable = true;
+			canvasGroup.blocksRaycasts = true;
 
 		}
-
+			
+	
 	}
 
 }
