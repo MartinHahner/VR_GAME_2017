@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using EZEffects;
 
 // [System.Serializable] makes it possible, to cache the variables in unity. 
 [System.Serializable]
@@ -10,7 +11,14 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour
 {
-    
+    public GameObject controllerRight;
+    private SteamVR_TrackedObject trackedObj;
+    private SteamVR_TrackedController controller;
+    private SteamVR_Controller.Device device;
+
+    public EffectTracer TracerEffect;
+
+
 
     public float speed;
     public Boundary boundary;
@@ -22,27 +30,56 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     private float NextFire = 0.0F;
+    
 
-
-    private void Start()
+    //private void Start()
+    void Start()
     {
         rb= GetComponent<Rigidbody>();
+        controller = GetComponent<SteamVR_TrackedController>();
+        controller.TriggerClicked += TriggerPressed;
+        trackedObj = controllerRight.GetComponent<SteamVR_TrackedObject>();
     }
-    // Fire the shots!
-    private void Update()
+    
+    private void TriggerPressed(object sender, ClickedEventArgs e)
     {
-        if(Input.GetButton("Fire1") && Time.time > NextFire)
+        ShootBall();
+    }
+
+    public void ShootBall()
+    {
+        /*if (Time.time > NextFire)
+        {
+            NextFire = Time.time + FireRate;
+            // Instantiate(object, position, rotation);
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject;
+        }*/
+         RaycastHit hit = new RaycastHit();
+         Ray ray = new Ray(shotSpawn.position, shotSpawn.forward);
+
+         device = SteamVR_Controller.Input((int)trackedObj.index);
+         device.TriggerHapticPulse(750);
+         TracerEffect.ShowTracerEffect(shotSpawn.position, shotSpawn.forward, 250f);
+    }
+
+
+    // Fire the shots!
+    /*private void Update()
+    {
+        if (controller.TriggerClicked && Time.time > NextFire)
+        //if (controller && Time.time > NextFire)
+        if (Input.GetButton("Fire1") && Time.time > NextFire)
         {
             NextFire = Time.time + FireRate;
             // Instantiate(object, position, rotation);
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
         }        
-    }
+    }*/
 
 
-        private void FixedUpdate()
+    // Move the player
+    private void FixedUpdate()
     {
-        // Move the player
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
