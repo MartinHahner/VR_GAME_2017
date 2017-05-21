@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +7,10 @@ public class MoveCannon : MonoBehaviour {
 	public GameObject TurnStyle_Vertical;
 	public GameObject TurnStyle_Horiztal;
 	public Transform cannonPose;
+
+	public GameObject soundClip;
+	public float timeSound;
+	public float timeTrack;
 
 	public float xVal = 0;
 	public float yVal = 0;
@@ -34,6 +38,8 @@ public class MoveCannon : MonoBehaviour {
 		TurnStyle_Horiztal = GameObject.FindWithTag ("Horizontal");
 		cannonPose = transform;
 
+		timeSound = Time.deltaTime;
+		timeTrack = Time.deltaTime;
 	}
 
 	// Update is called once per frame
@@ -63,32 +69,28 @@ public class MoveCannon : MonoBehaviour {
 		//Update total degrees rotated
 
 		//Limits Cannon to +/- 60 Deg Vertical
-		if (xRots == 3){ 
+		if (xRots == 3) { 
 			xTotDeg = (xRots * 360);
-		} 
-		else if (xRots == -4)  {
-			xTotDeg = ((xRots+1) * 360);
-		}
-		else {
+		} else if (xRots == -4) {
+			xTotDeg = ((xRots + 1) * 360);
+		} else {
 			xTotDeg = (xRots * 360) + xVal;
 		}
 
 
 
 		//limits Cannon to +/- 60 Deg Horizontal
-		if (yRots == 3){ 
+		if (yRots == 3) { 
 			yTotDeg = (yRots * 360);
-		} 
-		else if (yRots == -4)  {
-			yTotDeg = ((yRots+1) * 360);
-		}
-		else {
+		} else if (yRots == -4) {
+			yTotDeg = ((yRots + 1) * 360);
+		} else {
 			yTotDeg = (yRots * 360) + yVal;
 		}
 
 		//scale Cannon rotation to be equal to +/- 30Deg per Turner rotation
 		CannonX = -(xTotDeg / 18f);
-		CannonY = (yTotDeg / 18f)-180; // set's initial pose to correct orientation
+		CannonY = (yTotDeg / 18f) - 180; // set's initial pose to correct orientation
 
 		//Update Cannon Orientation
 		cannonPose.rotation = Quaternion.Euler (CannonX, CannonY, 0);
@@ -98,8 +100,16 @@ public class MoveCannon : MonoBehaviour {
 		xTemp = xVal;
 		yTemp = yVal;
 
+		if (Mathf.Abs (xTotDeg - xTotDegLast) > 2 || Mathf.Abs (yTotDeg - yTotDegLast) > 2) {
+			if (timeTrack - timeSound > 0.06f) {
+				GameObject clink = Instantiate (soundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
+				timeSound = timeTrack + 0.06f;
+			}
+		}
+
 		xTotDegLast = xTotDeg;
 		yTotDegLast = yTotDeg;
+		timeTrack += Time.deltaTime;
+	
 	}
-
 }
