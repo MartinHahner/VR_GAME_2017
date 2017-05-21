@@ -64,9 +64,8 @@ public class PlayerController : MonoBehaviour
 
 
     // Fire the shots!
-    /*private void Update()
+    private void Update()
     {
-        if (controller.TriggerClicked && Time.time > NextFire)
         //if (controller && Time.time > NextFire)
         if (Input.GetButton("Fire1") && Time.time > NextFire)
         {
@@ -74,7 +73,7 @@ public class PlayerController : MonoBehaviour
             // Instantiate(object, position, rotation);
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
         }        
-    }*/
+    }
 
 
     // Move the player
