@@ -8,8 +8,6 @@ public class FireButtonV2 : MonoBehaviour
     public Transform shotSpawn;
     public float FireRate = 0.5F;
 
-    private Rigidbody rb;
-
     private float NextFire = 0.0F;
 
     public SteamVR_TrackedController ControllerRight;
@@ -20,11 +18,7 @@ public class FireButtonV2 : MonoBehaviour
         ControllerRight.TriggerClicked += Trigger;
             
        }
-    private void Start()
-    {
-        rb= GetComponent<Rigidbody>();
-        //Fire();
-    }
+
     // Fire the shots!
     void Trigger(object sender, ClickedEventArgs e)
     {
