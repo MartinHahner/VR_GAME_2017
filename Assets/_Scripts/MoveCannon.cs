@@ -8,7 +8,7 @@ public class MoveCannon : MonoBehaviour {
 	public GameObject TurnStyle_Horiztal;
 	public Transform cannonPose;
 
-	public GameObject soundClip;
+	public GameObject clinkSoundClip;
 	public float timeSound;
 	public float timeTrack;
 
@@ -102,7 +102,7 @@ public class MoveCannon : MonoBehaviour {
 
 		if (Mathf.Abs (xTotDeg - xTotDegLast) > 2 || Mathf.Abs (yTotDeg - yTotDegLast) > 2) {
 			if (timeTrack - timeSound > 0.06f) {
-				GameObject clink = Instantiate (soundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
+				GameObject clink = Instantiate (clinkSoundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
 				timeSound = timeTrack + 0.06f;
 			}
 		}
