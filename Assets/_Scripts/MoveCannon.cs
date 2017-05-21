@@ -11,6 +11,11 @@ public class MoveCannon : MonoBehaviour {
 	public GameObject clinkSoundClip;
 	public float timeSound;
 	public float timeTrack;
+    public float GearClickX;
+    public float GearClickXLast;
+    public float GearClickY;
+    public float GearClickYLast;
+    private bool Init = true;
 
 	public float xVal = 0;
 	public float yVal = 0;
@@ -40,6 +45,7 @@ public class MoveCannon : MonoBehaviour {
 
 		timeSound = Time.deltaTime;
 		timeTrack = Time.deltaTime;
+
 	}
 
 	// Update is called once per frame
@@ -96,7 +102,7 @@ public class MoveCannon : MonoBehaviour {
         {
             xTotDeg = xVal;
         }
-
+        
 
 
 
@@ -104,19 +110,29 @@ public class MoveCannon : MonoBehaviour {
         CannonX = (xTotDeg / 3f)-60;
 		CannonY = -(yTotDeg / 3f) - 120; // set's initial pose to correct orientation
 
-		//Update Cannon Orientation
-		cannonPose.rotation = Quaternion.Euler (CannonX, CannonY, 0);
+        GearClickX = CannonX;
+        GearClickY = CannonY;
+        while(Init)
+        {
+            GearClickXLast = CannonX;
+            GearClickYLast = CannonY;
+            Init = false;
+        }
+
+        //Update Cannon Orientation
+        cannonPose.rotation = Quaternion.Euler (CannonX, CannonY, 0);
 
 
 		//Save current iteration values for future comparison
 		xTemp = xVal;
 		yTemp = yVal;
 
-		if (Mathf.Abs (xTotDeg - xTotDegLast) > 2 || Mathf.Abs (yTotDeg - yTotDegLast) > 2) {
-			if (timeTrack - timeSound > 0.06f) {
+		if ((Mathf.Abs(GearClickXLast - GearClickX) > 5 || Mathf.Abs(GearClickY - GearClickYLast) > 5) && (timeTrack - timeSound) > 0.3f) {
 				GameObject clink = Instantiate (clinkSoundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
-				timeSound = timeTrack + 0.06f;
-			}
+				timeSound = timeTrack;
+                GearClickXLast = GearClickX;
+                GearClickYLast = GearClickY;
+			
 		}
 
 		xTotDegLast = xTotDeg;
