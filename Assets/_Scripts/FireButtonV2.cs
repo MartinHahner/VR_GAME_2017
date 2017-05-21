@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FireButtonV2 : MonoBehaviour
 {
@@ -11,19 +12,37 @@ public class FireButtonV2 : MonoBehaviour
 
     private float NextFire = 0.0F;
 
+    public SteamVR_TrackedController ControllerRight;
 
+    /*void Awake()
+    {
+        ControllerRight = GetComponent<SteamVR_TrackedController>();
+        ControllerRight.TriggerClicked += Trigger;
+            
+       }
     private void Start()
     {
         rb= GetComponent<Rigidbody>();
+        //Fire();
     }
     // Fire the shots!
+    void Trigger(object sender, ClickedEventArgs e)
+    {
+        //if(Time.time > NextFire)
+        //{
+        //    NextFire = Time.time + FireRate;
+            // Instantiate(object, position, rotation);
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
+        //}        
+    }*/
+
     private void Update()
     {
-        if(Input.GetButton("Fire1") && Time.time > NextFire)
+        if (Input.GetButton("Fire1") && Time.time > NextFire)
         {
             NextFire = Time.time + FireRate;
             // Instantiate(object, position, rotation);
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
-        }        
+        }
     }
 }

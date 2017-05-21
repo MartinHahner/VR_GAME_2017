@@ -53,23 +53,23 @@ public class MoveCannon : MonoBehaviour {
 
 		//count number of rotations of wheels by counting flips from 0 to 360 or 360 to 0
 		//limits count to 3 rotations
-		if ((xVal < 10f && xTemp > 350f) && (xRots < 3)) {
+		if ((xVal < 10f && xTemp > 350f) && (xRots < 1)) {
 			xRots += 1;
 		}
-		if ((xVal > 350f && xTemp < 10f) && (xRots > -4)) {
+		if ((xVal > 350f && xTemp < 10f) && (xRots > -1)) {
 			xRots -= 1;
 		}
-		if ((yVal < 10f && yTemp > 350f) && (yRots < 3)) {
+		if ((yVal < 10f && yTemp > 350f) && (yRots < 1)) {
 			yRots += 1;
 		}
-		if ((yVal > 350f && yTemp < 10f) && (yRots > -4)) {
+		if ((yVal > 350f && yTemp < 10f) && (yRots > -1)) {
 			yRots -= 1;
 		}
 
 		//Update total degrees rotated
 
 		//Limits Cannon to +/- 60 Deg Vertical
-		if (xRots == 3) { 
+		/*if (xRots == 3) { 
 			xTotDeg = (xRots * 360);
 		} else if (xRots == -4) {
 			xTotDeg = ((xRots + 1) * 360);
@@ -86,11 +86,23 @@ public class MoveCannon : MonoBehaviour {
 			yTotDeg = ((yRots + 1) * 360);
 		} else {
 			yTotDeg = (yRots * 360) + yVal;
-		}
+		}*/
 
-		//scale Cannon rotation to be equal to +/- 30Deg per Turner rotation
-		CannonX = -(xTotDeg / 18f);
-		CannonY = (yTotDeg / 18f) - 180; // set's initial pose to correct orientation
+        if (yRots == 0)
+        {
+            yTotDeg = yVal;
+        }
+        if (xRots == 0)
+        {
+            xTotDeg = xVal;
+        }
+
+
+
+
+        //scale Cannon rotation to be equal to +/- 30Deg per Turner rotation
+        CannonX = (xTotDeg / 3f)-60;
+		CannonY = -(yTotDeg / 3f) - 120; // set's initial pose to correct orientation
 
 		//Update Cannon Orientation
 		cannonPose.rotation = Quaternion.Euler (CannonX, CannonY, 0);
