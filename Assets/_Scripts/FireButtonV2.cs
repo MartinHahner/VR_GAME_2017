@@ -8,9 +8,19 @@ public class FireButtonV2 : MonoBehaviour
     public Transform shotSpawn;
     public float FireRate = 0.5F;
 
+	public GameObject Flash;
+	private Quaternion rot;
+	private Vector3 pos;
+
     private float NextFire = 0.0F;
 
     public SteamVR_TrackedController ControllerRight;
+
+	void MuzzleFlash(){
+		rot = shotSpawn.rotation;
+		pos = shotSpawn.position;
+		GameObject MFlash = Instantiate (Flash, pos, rot) as GameObject;
+	}
 
     /*void Awake()
     {
@@ -36,7 +46,9 @@ public class FireButtonV2 : MonoBehaviour
         {
             NextFire = Time.time + FireRate;
             // Instantiate(object, position, rotation);
+			Instantiate (Flash, shotSpawn.position, shotSpawn.rotation);// as GameObject;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
+
         }
     }
 }
