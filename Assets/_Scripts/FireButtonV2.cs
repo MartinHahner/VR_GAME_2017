@@ -14,35 +14,32 @@ public class FireButtonV2 : MonoBehaviour
 
     private float NextFire = 0.0F;
 
-    public SteamVR_TrackedController ControllerRight;
+	SteamVR_Controller.Device device;
+	SteamVR_TrackedObject trackedObj;
+
+	void Awake ()
+	{
+		trackedObj = GetComponent<SteamVR_TrackedObject> ();
+	}
+
+	void FixedUpdate()
+	{
+		device = SteamVR_Controller.Input ((int)trackedObj.index);
+	}
 
 	void MuzzleFlash(){
 		rot = shotSpawn.rotation;
 		pos = shotSpawn.position;
 		GameObject MFlash = Instantiate (Flash, pos, rot) as GameObject;
 	}
-
-    /*void Awake()
-    {
-        ControllerRight = GetComponent<SteamVR_TrackedController>();
-        ControllerRight.TriggerClicked += Trigger;
-            
-       }
-
-    // Fire the shots!
-    void Trigger(object sender, ClickedEventArgs e)
-    {
-        //if(Time.time > NextFire)
-        //{
-        //    NextFire = Time.time + FireRate;
-            // Instantiate(object, position, rotation);
-            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
-        //}        
-    }*/
 	private List<GameObject> collidingObjects = new List<GameObject>();
 
 	void Start () {
-		GetComponent<SphereCollider>().isTrigger = true;
+		GetComponent<SphereCollider> ().isTrigger = true;
+		if(device.GetPressDown (SteamVR_Controller.ButtonMask.Grip))
+		{
+			device.TriggerHapticPulse(1000);	
+		}
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -54,18 +51,7 @@ public class FireButtonV2 : MonoBehaviour
 			Instantiate (Flash, shotSpawn.position, shotSpawn.rotation);// as GameObject;
 			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
 
+
 		}
 	}
-
-//    private void Update()
-//    {
-//        if (Input.GetButton("Fire1") && Time.time > NextFire)
-//        {
-//            NextFire = Time.time + FireRate;
-//            // Instantiate(object, position, rotation);
-//			Instantiate (Flash, shotSpawn.position, shotSpawn.rotation);// as GameObject;
-//            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
-//
-//        }
-//    }
 }
