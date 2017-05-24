@@ -7,6 +7,7 @@ public class FireButtonV2 : MonoBehaviour
     public GameObject shot;
     public Transform shotSpawn;
     public float FireRate = 0.5F;
+	private int i = 1;
 
 	public GameObject Flash;
 	private Quaternion rot;
@@ -14,10 +15,12 @@ public class FireButtonV2 : MonoBehaviour
 
     private float NextFire = 0.0F;
 
-	SteamVR_Controller.Device device;
-	SteamVR_TrackedObject trackedObj;
+	private SteamVR_TrackedObject trackedObj;
+	private SteamVR_Controller.Device device;
 
-	void Awake ()
+
+
+	private void Awake ()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
 	}
@@ -34,13 +37,9 @@ public class FireButtonV2 : MonoBehaviour
 	}
 	private List<GameObject> collidingObjects = new List<GameObject>();
 
-	void Start () {
+	/*void Start () {
 		GetComponent<SphereCollider> ().isTrigger = true;
-		if(device.GetPressDown (SteamVR_Controller.ButtonMask.Grip))
-		{
-			device.TriggerHapticPulse(1000);	
-		}
-	}
+	}*/
 
 	void OnTriggerEnter(Collider other) {
 //		if (Input.GetButton("Fire1") && Time.time > NextFire)
@@ -50,6 +49,11 @@ public class FireButtonV2 : MonoBehaviour
 			// Instantiate(object, position, rotation);
 			Instantiate (Flash, shotSpawn.position, shotSpawn.rotation);// as GameObject;
 			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
+			if(i==1)
+			{
+				device.TriggerHapticPulse(1000);
+				//https://forum.unity3d.com/threads/issue-with-triggerhapticpulse-vive-controller.411081/
+			}
 
 
 		}

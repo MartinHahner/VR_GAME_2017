@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class boundaries
+{
+	public float xVal, yVal, xTemp, yTemp, xRots, yRots, xTotDeg, yTotDeg, xTotDegLast, yTotDegLast, CannonX, CannonY;
+}
+
 public class MoveCannon : MonoBehaviour {
 
 	public GameObject TurnStyle_Vertical;
 	public GameObject TurnStyle_Horiztal;
 	public Transform cannonPose;
+
+	public boundaries Boundaries;
 
 	public GameObject clinkSoundClip;
 	public float timeSound;
@@ -17,6 +25,7 @@ public class MoveCannon : MonoBehaviour {
     public float GearClickYLast;
     private bool Init = true;
 
+	/*
 	public float xVal = 0;
 	public float yVal = 0;
 	public float xTemp = 0;
@@ -32,7 +41,7 @@ public class MoveCannon : MonoBehaviour {
 
 
 	public float CannonX = 0;
-	public float CannonY = 0;
+	public float CannonY = 0;*/
 
 
 
@@ -52,24 +61,24 @@ public class MoveCannon : MonoBehaviour {
 	void Update () {
 
 		//Get current orientation of z-axis for both the Vertical_Turner and the Horizontal_Turner
-		yVal = TurnStyle_Vertical.transform.eulerAngles.z;
-		xVal = TurnStyle_Horiztal.transform.eulerAngles.z;
+		Boundaries.yVal = TurnStyle_Vertical.transform.eulerAngles.z;
+		Boundaries.xVal = TurnStyle_Horiztal.transform.eulerAngles.z;
 
 
 
 		//count number of rotations of wheels by counting flips from 0 to 360 or 360 to 0
 		//limits count to 3 rotations
-		if ((xVal < 10f && xTemp > 350f) && (xRots < 1)) {
-			xRots += 1;
+		if ((Boundaries.xVal < 10f && Boundaries.xTemp > 350f) && (Boundaries.xRots < 1)) {
+			Boundaries.xRots += 1;
 		}
-		if ((xVal > 350f && xTemp < 10f) && (xRots > -1)) {
-			xRots -= 1;
+		if ((Boundaries.xVal > 350f && Boundaries.xTemp < 10f) && (Boundaries.xRots > -1)) {
+			Boundaries.xRots -= 1;
 		}
-		if ((yVal < 10f && yTemp > 350f) && (yRots < 1)) {
-			yRots += 1;
+		if ((Boundaries.yVal < 10f && Boundaries.yTemp > 350f) && (Boundaries.yRots < 1)) {
+			Boundaries.yRots += 1;
 		}
-		if ((yVal > 350f && yTemp < 10f) && (yRots > -1)) {
-			yRots -= 1;
+		if ((Boundaries.yVal > 350f && Boundaries.yTemp < 10f) && (Boundaries.yRots > -1)) {
+			Boundaries.yRots -= 1;
 		}
 
 		//Update total degrees rotated
@@ -94,38 +103,38 @@ public class MoveCannon : MonoBehaviour {
 			yTotDeg = (yRots * 360) + yVal;
 		}*/
 
-        if (yRots == 0)
+		if (Boundaries.yRots == 0)
         {
-            yTotDeg = yVal;
+			Boundaries.yTotDeg = Boundaries.yVal;
         }
-        if (xRots == 0)
+		if (Boundaries.xRots == 0)
         {
-            xTotDeg = xVal;
+			Boundaries.xTotDeg = Boundaries.xVal;
         }
         
 
 
 
         //scale Cannon rotation to be equal to +/- 30Deg per Turner rotation
-        CannonX = (xTotDeg / 3f)-60;
-		CannonY = -(yTotDeg / 3f) - 120; // set's initial pose to correct orientation
+		Boundaries.CannonX = (Boundaries.xTotDeg / 3f)-60;
+		Boundaries.CannonY = -(Boundaries.yTotDeg / 3f) - 120; // set's initial pose to correct orientation
 
-        GearClickX = CannonX;
-        GearClickY = CannonY;
+		GearClickX = Boundaries.CannonX;
+		GearClickY = Boundaries.CannonY;
         while(Init)
         {
-            GearClickXLast = CannonX;
-            GearClickYLast = CannonY;
+			GearClickXLast = Boundaries.CannonX;
+			GearClickYLast = Boundaries.CannonY;
             Init = false;
         }
 
         //Update Cannon Orientation
-        cannonPose.rotation = Quaternion.Euler (CannonX, CannonY, 0);
+		cannonPose.rotation = Quaternion.Euler (Boundaries.CannonX, Boundaries.CannonY, 0);
 
 
 		//Save current iteration values for future comparison
-		xTemp = xVal;
-		yTemp = yVal;
+		Boundaries.xTemp = Boundaries.xVal;
+		Boundaries.yTemp = Boundaries.yVal;
 
 		if ((Mathf.Abs(GearClickXLast - GearClickX) > 5 || Mathf.Abs(GearClickY - GearClickYLast) > 5) && (timeTrack - timeSound) > 0.3f) {
 				GameObject clink = Instantiate (clinkSoundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
@@ -135,8 +144,8 @@ public class MoveCannon : MonoBehaviour {
 			
 		}
 
-		xTotDegLast = xTotDeg;
-		yTotDegLast = yTotDeg;
+		Boundaries.xTotDegLast = Boundaries.xTotDeg;
+		Boundaries.yTotDegLast = Boundaries.yTotDeg;
 		timeTrack += Time.deltaTime;
 	
 	}
