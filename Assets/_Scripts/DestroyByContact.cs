@@ -9,6 +9,20 @@ public class DestroyByContact : MonoBehaviour
 
 	public GameObject explosion;
 
+	void Start ()
+	{
+		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
+		if (gameControllerObject != null)
+		{
+			gameController = gameControllerObject.GetComponent <GameController>();
+		}
+
+		if (gameController == null)
+		{
+			Debug.Log ("Cannot find 'GameController' script");
+		}
+	}
+
 	// This code destroys Canon Ball and Monster!
 	void OnTriggerEnter(Collider other)
 	{
@@ -29,6 +43,7 @@ public class DestroyByContact : MonoBehaviour
 		//Destroy(other.gameObject);
 		Destroy(gameObject);
 
+		// scoring
 		gameController.AddScore(scoreValue);
 
 	}
