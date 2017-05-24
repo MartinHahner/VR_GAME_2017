@@ -16,7 +16,7 @@ public class Countdown : MonoBehaviour {
 
 	private Rigidbody rb;
 
-	public CanvasGroup canvasGroup;
+	private CanvasGroup canvasGroup;
 
 	void Start() {
 
