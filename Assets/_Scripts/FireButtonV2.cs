@@ -39,16 +39,33 @@ public class FireButtonV2 : MonoBehaviour
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
         //}        
     }*/
+	private List<GameObject> collidingObjects = new List<GameObject>();
 
-    private void Update()
-    {
-        if (Input.GetButton("Fire1") && Time.time > NextFire)
-        {
-            NextFire = Time.time + FireRate;
-            // Instantiate(object, position, rotation);
+	void Start () {
+		GetComponent<SphereCollider>().isTrigger = true;
+	}
+
+	void OnTriggerEnter(Collider other) {
+//		if (Input.GetButton("Fire1") && Time.time > NextFire)
+		if (Time.time > NextFire)
+		{
+			NextFire = Time.time + FireRate;
+			// Instantiate(object, position, rotation);
 			Instantiate (Flash, shotSpawn.position, shotSpawn.rotation);// as GameObject;
-            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
+			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
 
-        }
-    }
+		}
+	}
+
+//    private void Update()
+//    {
+//        if (Input.GetButton("Fire1") && Time.time > NextFire)
+//        {
+//            NextFire = Time.time + FireRate;
+//            // Instantiate(object, position, rotation);
+//			Instantiate (Flash, shotSpawn.position, shotSpawn.rotation);// as GameObject;
+//            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
+//
+//        }
+//    }
 }
