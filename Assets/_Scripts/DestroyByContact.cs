@@ -43,8 +43,12 @@ public class DestroyByContact : MonoBehaviour
 		//Destroy(other.gameObject);
 		Destroy(gameObject);
 
-		// scoring
-		gameController.AddScore(scoreValue);
+		if (other.tag != "Castle")
+		{
+			// scoring
+			gameController.AddScore(scoreValue);
+		}
 
 	}
+
 }

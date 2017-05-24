@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Countdown : MonoBehaviour {
 
-	float timeLeft = 120.0f;
+	float timeLeft = 60.0f;
 
 	public CanvasGroup canvasGroup;
 
