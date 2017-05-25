@@ -8,6 +8,9 @@ public class DestroyCastle : MonoBehaviour
 	public GameObject WallCrumble;
 	public GameObject CastleCrumble;
 
+	public GameObject SpawnRestartPose;
+	public GameObject Restart;
+
 	// This code destroys Canon Ball and Monster!
 	void OnTriggerEnter(Collider other)
 	{
@@ -24,5 +27,7 @@ public class DestroyCastle : MonoBehaviour
 		Instantiate (CastleCrumble, transform.position, transform.rotation);
 
 		Destroy(gameObject);
+
+		Instantiate (Restart, SpawnRestartPose.transform.position, SpawnRestartPose.transform.rotation);
 	}
 }
