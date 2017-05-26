@@ -22,6 +22,14 @@ public class DestroyCastle : MonoBehaviour
         {
             return;
         }
+        if (other.tag == "Ball")
+        {
+            return;
+        }
+        if (other.tag == "controller")
+        {
+            return;
+        }
         Instantiate (explosion, transform.position, transform.rotation);
 		Instantiate (WallCrumble, transform.position, transform.rotation);
 		Instantiate (CastleCrumble, transform.position, transform.rotation);
