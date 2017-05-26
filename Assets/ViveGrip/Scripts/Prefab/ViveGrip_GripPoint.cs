@@ -133,6 +133,7 @@ public class ViveGrip_GripPoint : MonoBehaviour {
     gripSphere.AddComponent<Rigidbody>().isKinematic = true;
     gripSphere.layer = gameObject.layer;
     gripSphere.name = GRIP_SPHERE_NAME;
+    gripSphere.tag = "controller";
     return gripSphere;
   }
 

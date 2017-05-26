@@ -14,8 +14,12 @@ public class FireButtonV2 : MonoBehaviour
 	private Vector3 pos;
 
     private float NextFire = 0.0F;
+    SteamVR_Controller.Device deviceR;
+    public SteamVR_TrackedObject trackedObjR;
+    SteamVR_Controller.Device deviceL;
+    public SteamVR_TrackedObject trackedObjL;
 
-	/*
+    /*
 	private SteamVR_TrackedObject trackedObj;
 	private SteamVR_Controller.Device device;
 
@@ -31,7 +35,7 @@ public class FireButtonV2 : MonoBehaviour
 		device = SteamVR_Controller.Input ((int)trackedObj.index);
 	}*/
 
-	void MuzzleFlash(){
+    void MuzzleFlash(){
 		rot = shotSpawn.rotation;
 		pos = shotSpawn.position;
 		GameObject MFlash = Instantiate (Flash, pos, rot) as GameObject;
@@ -39,10 +43,14 @@ public class FireButtonV2 : MonoBehaviour
 	private List<GameObject> collidingObjects = new List<GameObject>();
 
 	void Start () {
-		GetComponent<SphereCollider> ().isTrigger = true;
-	}
+		GetComponent<CapsuleCollider> ().isTrigger = true;
+        deviceR = SteamVR_Controller.Input((int)trackedObjR.index);
+        deviceL = SteamVR_Controller.Input((int)trackedObjL.index);
+
+    }
 
 	void OnTriggerEnter(Collider other) {
+        Debug.Log("Cannon touched");
 //		if (Input.GetButton("Fire1") && Time.time > NextFire)
 		if (Time.time > NextFire)
 		{
@@ -51,7 +59,7 @@ public class FireButtonV2 : MonoBehaviour
 			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
 
 			/*
-			if(i==1)
+			if(other.tag == "Player")
 			{
 				device.TriggerHapticPulse(1000);
 				//https://forum.unity3d.com/threads/issue-with-triggerhapticpulse-vive-controller.411081/
@@ -59,5 +67,27 @@ public class FireButtonV2 : MonoBehaviour
 			*/
 
 		}
-	}
+        
+
+        if (other.gameObject.tag == "controller")
+        {
+            rumbleController();
+        }
+    }
+    void rumbleController()
+    {
+
+        StartCoroutine(LongVibration(1, 3999));
+
+    }
+
+    IEnumerator LongVibration(float length, float strength)
+    {
+        for (float i = 0; i < length; i += Time.deltaTime)
+        {
+            deviceR.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
+            deviceL.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
+            yield return null;
+        }
+    }
 }

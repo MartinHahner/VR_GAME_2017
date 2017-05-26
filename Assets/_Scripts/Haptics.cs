@@ -10,7 +10,7 @@ public class Haptics : MonoBehaviour {
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
 	}
-
+    
 	void FixedUpdate()
 	{
 		device = SteamVR_Controller.Input((int)trackedObj.index);
@@ -18,7 +18,13 @@ public class Haptics : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.tag = "Player") {
+
+        Debug.Log("FIRST trigger entered");
+        Debug.Log("Tag = " + other.gameObject.tag);
+        Debug.Log(" Object triggering = " + other.gameObject.name);
+       
+        if (other.gameObject.tag == "Player") {
+            Debug.Log("trigger entered");
 			rumbleController ();
 		}
 	}
