@@ -25,7 +25,12 @@ public class MoveCannon : MonoBehaviour {
     public float GearClickYLast;
     private bool Init = true;
 
-	/*
+    SteamVR_Controller.Device deviceR;
+    public SteamVR_TrackedObject trackedObjR;
+    SteamVR_Controller.Device deviceL;
+    public SteamVR_TrackedObject trackedObjL;
+
+    /*
 	public float xVal = 0;
 	public float yVal = 0;
 	public float xTemp = 0;
@@ -47,18 +52,42 @@ public class MoveCannon : MonoBehaviour {
 
 
 
-	void Start () {
+    void Start () {
 		TurnStyle_Vertical = GameObject.FindWithTag ("Vertical");
 		TurnStyle_Horiztal = GameObject.FindWithTag ("Horizontal");
 		cannonPose = transform;
 
-		timeSound = Time.deltaTime;
+        deviceR = SteamVR_Controller.Input((int)trackedObjR.index);
+        deviceL = SteamVR_Controller.Input((int)trackedObjL.index);
+        
+
+        timeSound = Time.deltaTime;
 		timeTrack = Time.deltaTime;
 
 	}
 
-	// Update is called once per frame
-	void Update () {
+  
+
+    void rumbleController()
+    {
+
+        StartCoroutine(LongVibration(0.1f, 200));
+
+    }
+
+    IEnumerator LongVibration(float length, float strength)
+    {
+        StartCoroutine(TimeDelay());
+        for (float i = 0; i < length; i += Time.deltaTime)
+        {
+            deviceR.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
+            deviceL.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
+            yield return null;
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 
 		//Get current orientation of z-axis for both the Vertical_Turner and the Horizontal_Turner
 		Boundaries.yVal = TurnStyle_Vertical.transform.eulerAngles.z;
@@ -138,15 +167,22 @@ public class MoveCannon : MonoBehaviour {
 
 		if ((Mathf.Abs(GearClickXLast - GearClickX) > 5 || Mathf.Abs(GearClickY - GearClickYLast) > 5) && (timeTrack - timeSound) > 0.3f) {
 				GameObject clink = Instantiate (clinkSoundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
-				timeSound = timeTrack;
+                
+                timeSound = timeTrack;
                 GearClickXLast = GearClickX;
                 GearClickYLast = GearClickY;
-			
-		}
+
+                
+                rumbleController();
+        }
 
 		Boundaries.xTotDegLast = Boundaries.xTotDeg;
 		Boundaries.yTotDegLast = Boundaries.yTotDeg;
 		timeTrack += Time.deltaTime;
 	
 	}
+    IEnumerator TimeDelay()
+    {
+        yield return new WaitForSeconds(50);
+    }
 }
