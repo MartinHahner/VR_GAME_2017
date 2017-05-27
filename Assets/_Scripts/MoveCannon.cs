@@ -25,10 +25,7 @@ public class MoveCannon : MonoBehaviour {
     public float GearClickYLast;
     private bool Init = true;
 
-    SteamVR_Controller.Device deviceR;
-    public SteamVR_TrackedObject trackedObjR;
-    SteamVR_Controller.Device deviceL;
-    public SteamVR_TrackedObject trackedObjL;
+
 
     /*
 	public float xVal = 0;
@@ -57,8 +54,6 @@ public class MoveCannon : MonoBehaviour {
 		TurnStyle_Horiztal = GameObject.FindWithTag ("Horizontal");
 		cannonPose = transform;
 
-        deviceR = SteamVR_Controller.Input((int)trackedObjR.index);
-        deviceL = SteamVR_Controller.Input((int)trackedObjL.index);
         
 
         timeSound = Time.deltaTime;
@@ -68,23 +63,7 @@ public class MoveCannon : MonoBehaviour {
 
   
 
-    void rumbleController()
-    {
-
-        StartCoroutine(LongVibration(0.1f, 200));
-
-    }
-
-    IEnumerator LongVibration(float length, float strength)
-    {
-        StartCoroutine(TimeDelay());
-        for (float i = 0; i < length; i += Time.deltaTime)
-        {
-            deviceR.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
-            deviceL.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
-            yield return null;
-        }
-    }
+  
 
     // Update is called once per frame
     void Update () {
@@ -164,7 +143,7 @@ public class MoveCannon : MonoBehaviour {
 		//Save current iteration values for future comparison
 		Boundaries.xTemp = Boundaries.xVal;
 		Boundaries.yTemp = Boundaries.yVal;
-        /*
+        
 		if ((Mathf.Abs(GearClickXLast - GearClickX) > 5 || Mathf.Abs(GearClickY - GearClickYLast) > 5) && (timeTrack - timeSound) > 0.3f) {
 				GameObject clink = Instantiate (clinkSoundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
                 
@@ -173,16 +152,12 @@ public class MoveCannon : MonoBehaviour {
                 GearClickYLast = GearClickY;
 
                 
-                rumbleController();
         }
-        */
+        
 		Boundaries.xTotDegLast = Boundaries.xTotDeg;
 		Boundaries.yTotDegLast = Boundaries.yTotDeg;
 		timeTrack += Time.deltaTime;
 	
 	}
-    IEnumerator TimeDelay()
-    {
-        yield return new WaitForSeconds(50);
-    }
+    
 }

@@ -38,16 +38,20 @@ public class DestroyByContact : MonoBehaviour
         {
             return;
         }
+        if (other.tag == "Monster")
+        {
+            return;
+        }
         Instantiate (explosion, transform.position, transform.rotation);
 
-		//Destroy(other.gameObject);
-		Destroy(gameObject);
+        if (other.tag != "Castle")
+        {
+            // scoring
+            gameController.AddScore(scoreValue);
+        }
 
-		if (other.tag != "Castle")
-		{
-			// scoring
-			gameController.AddScore(scoreValue);
-		}
+        Destroy(other.gameObject);
+		Destroy(gameObject);
 
 	}
 
