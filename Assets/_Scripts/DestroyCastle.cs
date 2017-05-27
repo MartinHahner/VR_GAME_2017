@@ -47,9 +47,18 @@ public class DestroyCastle : MonoBehaviour
 
 		}
 
-		lives = lives - 1;
+		if (lives > 0) {
+			
+			lives = lives - 1;
+		
+		}
 
-		Debug.Log (lives);
+
+		TextMesh textObject = GameObject.Find("LifeText").GetComponent<TextMesh>();
+
+		textObject.text = "lives: " + lives;
+
+		Debug.Log (lives + " lives remaining");
 
         
 	}
