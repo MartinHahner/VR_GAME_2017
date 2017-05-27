@@ -17,6 +17,10 @@ public class DestroyByContact : MonoBehaviour
         {
             return;
         }
+		if (other.tag == "Monster")
+		{
+			return;
+		}
         Instantiate (explosion, transform.position, transform.rotation);
 
 		Destroy(other.gameObject);
