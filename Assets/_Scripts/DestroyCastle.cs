@@ -35,7 +35,7 @@ public class DestroyCastle : MonoBehaviour
             return;
         }
 
-		if (lives == 0) {
+		if (lives == 1) {
 
 			Instantiate (explosion, transform.position, transform.rotation);
 			Instantiate (WallCrumble, transform.position, transform.rotation);
