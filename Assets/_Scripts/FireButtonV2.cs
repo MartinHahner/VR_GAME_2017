@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class FireButtonV2 : MonoBehaviour
 {
+    public GameObject CannonSound;
     public GameObject shot;
     public Transform shotSpawn;
     public float FireRate = 0.5F;
@@ -56,9 +57,10 @@ public class FireButtonV2 : MonoBehaviour
 		{
 			NextFire = Time.time + FireRate;
 			Instantiate (Flash, shotSpawn.position, shotSpawn.rotation);// as GameObject;
-			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
+			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject;
+            Instantiate(CannonSound, shotSpawn.position, shotSpawn.rotation);// as GameObject; 
 
-			/*
+            /*
 			if(other.tag == "Player")
 			{
 				device.TriggerHapticPulse(1000);
@@ -66,7 +68,7 @@ public class FireButtonV2 : MonoBehaviour
 			}
 			*/
 
-		}
+        }
         
 
         if (other.gameObject.tag == "controller")
