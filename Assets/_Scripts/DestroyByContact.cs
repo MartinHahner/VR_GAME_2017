@@ -44,7 +44,7 @@ public class DestroyByContact : MonoBehaviour
         }
         Instantiate (explosion, transform.position, transform.rotation);
 
-        if (other.tag != "Castle")
+        if (other.tag == "Ball")
         {
             // scoring
             gameController.AddScore(scoreValue);
