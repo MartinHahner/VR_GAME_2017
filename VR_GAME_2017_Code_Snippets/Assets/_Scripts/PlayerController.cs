@@ -11,15 +11,6 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject controllerRight;
-    private SteamVR_TrackedObject trackedObj;
-    private SteamVR_TrackedController controller;
-    private SteamVR_Controller.Device device;
-
-    public EffectTracer TracerEffect;
-
-
-
     public float speed;
     public Boundary boundary;
 
@@ -36,38 +27,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb= GetComponent<Rigidbody>();
-        controller = GetComponent<SteamVR_TrackedController>();
-        controller.TriggerClicked += TriggerPressed;
-        trackedObj = controllerRight.GetComponent<SteamVR_TrackedObject>();
     }
     
-    private void TriggerPressed(object sender, ClickedEventArgs e)
-    {
-        ShootBall();
-    }
-
-    public void ShootBall()
-    {
-        /*if (Time.time > NextFire)
-        {
-            NextFire = Time.time + FireRate;
-            // Instantiate(object, position, rotation);
-            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);// as GameObject;
-        }*/
-         RaycastHit hit = new RaycastHit();
-         Ray ray = new Ray(shotSpawn.position, shotSpawn.forward);
-
-         device = SteamVR_Controller.Input((int)trackedObj.index);
-         device.TriggerHapticPulse(750);
-         TracerEffect.ShowTracerEffect(shotSpawn.position, shotSpawn.forward, 250f);
-    }
-
-
+   
     // Fire the shots!
     private void Update()
     {
         //if (controller && Time.time > NextFire)
-        if (Input.GetButton("Fire1") && Time.time > NextFire)
+        if (Input.GetButton("Fire2") && Time.time > NextFire)
         {
             NextFire = Time.time + FireRate;
             // Instantiate(object, position, rotation);

@@ -6,7 +6,9 @@ public class GameController : MonoBehaviour
     public GameObject hazard;
     public Vector3 spawnValues;
     public int hazardCount;
-    public float spawnWait;
+	public float spawnWait;
+	public float spawnAccelerator;
+	public float spawnMinimum;
     public float startWait;
     public float waveWait;
 
@@ -28,6 +30,11 @@ public class GameController : MonoBehaviour
                 yield return new WaitForSeconds(spawnWait);
             }
             yield return new WaitForSeconds(waveWait);
+
+			spawnWait = spawnWait - spawnAccelerator;
+			if (spawnWait <= spawnMinimum) {
+				spawnWait = spawnMinimum;
+			}
         }
     }
 }
