@@ -164,7 +164,7 @@ public class MoveCannon : MonoBehaviour {
 		//Save current iteration values for future comparison
 		Boundaries.xTemp = Boundaries.xVal;
 		Boundaries.yTemp = Boundaries.yVal;
-
+        /*
 		if ((Mathf.Abs(GearClickXLast - GearClickX) > 5 || Mathf.Abs(GearClickY - GearClickYLast) > 5) && (timeTrack - timeSound) > 0.3f) {
 				GameObject clink = Instantiate (clinkSoundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
                 
@@ -175,7 +175,7 @@ public class MoveCannon : MonoBehaviour {
                 
                 rumbleController();
         }
-
+        */
 		Boundaries.xTotDegLast = Boundaries.xTotDeg;
 		Boundaries.yTotDegLast = Boundaries.yTotDeg;
 		timeTrack += Time.deltaTime;
