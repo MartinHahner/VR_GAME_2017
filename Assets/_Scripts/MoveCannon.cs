@@ -25,6 +25,13 @@ public class MoveCannon : MonoBehaviour {
     public float GearClickYLast;
     private bool Init = true;
 
+	SteamVR_Controller.Device deviceR;
+	public SteamVR_TrackedObject trackedObjR;
+	SteamVR_Controller.Device deviceL;
+	public SteamVR_TrackedObject trackedObjL;
+	public float vibeLength;
+	public int vibeIntensity;
+
 	/*
 	public float xVal = 0;
 	public float yVal = 0;
@@ -46,7 +53,7 @@ public class MoveCannon : MonoBehaviour {
 
 
 
-
+	private List<GameObject> collidingObjects = new List<GameObject>();
 	void Start () {
 		TurnStyle_Vertical = GameObject.FindWithTag ("Vertical");
 		TurnStyle_Horiztal = GameObject.FindWithTag ("Horizontal");
@@ -55,6 +62,28 @@ public class MoveCannon : MonoBehaviour {
 		timeSound = Time.deltaTime;
 		timeTrack = Time.deltaTime;
 
+		deviceR = SteamVR_Controller.Input((int)trackedObjR.index);
+		deviceL = SteamVR_Controller.Input((int)trackedObjL.index);
+		vibeLength = 0.3;
+		vibeIntensity = 1000;
+
+	}
+
+	void rumbleController()
+	{
+
+		StartCoroutine(LongVibration(vibeLength, vibeIntensity));
+
+	}
+
+	IEnumerator LongVibration(float length, float strength)
+	{
+		for (float i = 0; i < length; i += Time.deltaTime)
+		{
+			deviceR.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
+			deviceL.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
+			yield return null;
+		}
 	}
 
 	// Update is called once per frame
@@ -138,6 +167,7 @@ public class MoveCannon : MonoBehaviour {
 
 		if ((Mathf.Abs(GearClickXLast - GearClickX) > 5 || Mathf.Abs(GearClickY - GearClickYLast) > 5) && (timeTrack - timeSound) > 0.3f) {
 				GameObject clink = Instantiate (clinkSoundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
+				rumbleController();
 				timeSound = timeTrack;
                 GearClickXLast = GearClickX;
                 GearClickYLast = GearClickY;
