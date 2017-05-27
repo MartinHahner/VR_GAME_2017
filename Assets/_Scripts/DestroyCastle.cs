@@ -13,6 +13,8 @@ public class DestroyCastle : MonoBehaviour
     public GameObject SpawnTitlePose;
     public GameObject Title;
 
+	private int lives = 5;
+
     // This code destroys Canon Ball and Monster!
     void OnTriggerEnter(Collider other)
 	{
@@ -32,12 +34,23 @@ public class DestroyCastle : MonoBehaviour
         {
             return;
         }
-        Instantiate (explosion, transform.position, transform.rotation);
-		Instantiate (WallCrumble, transform.position, transform.rotation);
-		Instantiate (CastleCrumble, transform.position, transform.rotation);
 
-		Destroy(gameObject);
-        Instantiate(Title, SpawnTitlePose.transform.position, SpawnTitlePose.transform.rotation);
-        Instantiate (Restart, SpawnRestartPose.transform.position, SpawnRestartPose.transform.rotation);
+		if (lives == 0) {
+
+			Instantiate (explosion, transform.position, transform.rotation);
+			Instantiate (WallCrumble, transform.position, transform.rotation);
+			Instantiate (CastleCrumble, transform.position, transform.rotation);
+
+			Destroy(gameObject);
+			Instantiate(Title, SpawnTitlePose.transform.position, SpawnTitlePose.transform.rotation);
+			Instantiate (Restart, SpawnRestartPose.transform.position, SpawnRestartPose.transform.rotation);
+
+		}
+
+		lives = lives - 1;
+
+		Debug.Log (lives);
+
+        
 	}
 }
