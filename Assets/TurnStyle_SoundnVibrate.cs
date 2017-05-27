@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TurnStyle_SoundnVibrate : MonoBehaviour {
 
@@ -41,9 +43,8 @@ public class TurnStyle_SoundnVibrate : MonoBehaviour {
         currentAngle = this.transform.eulerAngles.z;
         timeTrack += Time.deltaTime;
 
-        if ((Mathf.Abs(currentAngle - prevAngle) > 5)// && (timeTrack - timeSound) > 0.3f)
-        {
-            GameObject clink = Instantiate(clinkSoundClip, cannonPose.transform.position, Quaternion.identity) as GameObject;
+        if (Mathf.Abs(currentAngle - prevAngle) > 5) {
+            GameObject clink = Instantiate(clinkSoundClip, this.transform.position, Quaternion.identity) as GameObject;
             timeSound = timeTrack;
             prevAngle = currentAngle;
 
@@ -54,12 +55,15 @@ public class TurnStyle_SoundnVibrate : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Trigger Entered");
         if (other.gameObject.tag == "controllerR")
         {
+            Debug.Log("R");
             controllerNum = 1;
         }
         if (other.gameObject.tag == "controllerL")
         {
+            Debug.Log("L");
             controllerNum = 2;
         }
     }
