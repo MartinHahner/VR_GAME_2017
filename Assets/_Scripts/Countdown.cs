@@ -35,6 +35,10 @@ public class Countdown : MonoBehaviour {
 		timeLeft += Time.deltaTime;
 		textObject.text = "time: " + Mathf.Round(timeLeft) + "s";
 
+		// hide time
+		textObject.text = "";
+
+
 		if (GameObject.Find ("Castle") == null) {
 
 			// red
