@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 
 public class DestroyCastle : MonoBehaviour 
@@ -13,7 +14,17 @@ public class DestroyCastle : MonoBehaviour
     public GameObject SpawnTitlePose;
     public GameObject Title;
 
+	public GameObject Vibrations;
+
 	private int lives = 5;
+
+
+	void Start () {
+		GetComponent<SphereCollider> ().isTrigger = true;
+
+	}
+
+
 
     // This code destroys Canon Ball and Monster!
     void OnTriggerEnter(Collider other)
@@ -46,6 +57,8 @@ public class DestroyCastle : MonoBehaviour
 			Instantiate (Restart, SpawnRestartPose.transform.position, SpawnRestartPose.transform.rotation);
 
 		}
+
+
 
 		if (lives > 0) {
 			
